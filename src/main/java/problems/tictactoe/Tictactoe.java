@@ -73,7 +73,8 @@ public class Tictactoe {
             boolean winner = isWinner(inputRow, inputColumn, playerTurn.getPiece().pieceType);
             if(winner){
                 winnerName = playerTurn.getName();
-                System.out.println("The winner is: " + playerTurn.getName());
+                boardGame.printBoard();
+                noWinner = false;
             }
         }
         return winnerName;
@@ -88,23 +89,34 @@ public class Tictactoe {
         //check the row
         for(int i=0; i < boardGame.size; i++){
             if(boardGame.board[row][i] == null || boardGame.board[row][i].pieceType != piece){
-                return false;
+                rowMatch = false;
+                break;
             }
-            return true;
         }
 
         //check the col
         for(int i=0; i < boardGame.size; i++){
             if(boardGame.board[i][col] == null || boardGame.board[i][col].pieceType != piece){
-                return false;
+                colMatch = false;
+                break;
             }
-            return true;
         }
-        return false;
+
         //check the diagonal
+        for(int i = 0, j = 0; i < boardGame.size; i++ , j++){
+            if(boardGame.board[i][j] == null || boardGame.board[i][j].pieceType != piece){
+                diagonalMatch = false;
+                break;
+            }
+        }
 
-
+        //check the antiDiagonal
+        for(int i = 0, j = boardGame.size-1; i < boardGame.size; i++ , j--){
+            if(boardGame.board[i][j] == null || boardGame.board[i][j].pieceType != piece){
+                antiDiagonalMatch = false;
+                break;
+            }
+        }
+        return rowMatch||colMatch||diagonalMatch||antiDiagonalMatch;
     }
-
-
 }
